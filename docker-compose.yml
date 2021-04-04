@@ -1,0 +1,23 @@
+# Basic reusable PHP Docker environment. 
+version: "3.9"
+
+services:
+
+  web:
+    build: 
+      context: ./docker-config
+      dockerfile: nginx.Dockerfile
+    ports: 
+      - 8080:80
+      - 8443:443
+    volumes:
+      - ./:/code
+      - ./docker-config/site.conf:/etc/nginx/conf.d/default.conf
+  
+  php:
+    build: 
+      context: ./docker-config
+      dockerfile: php.Dockerfile
+    volumes:
+      - ./:/code
+      - ./docker-config/php.ini:/usr/local/etc/php/conf.d/local.ini
